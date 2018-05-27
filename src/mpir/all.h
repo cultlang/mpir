@@ -9,3 +9,6 @@ namespace mpir
 
   CULTLANG_MPIR_EXPORTED craft::instance<craft::lisp::Module> make_bindings(craft::instance<craft::lisp::Namespace> ns, craft::instance<> loader);
 }}  
+
+
+#include "mpir/default_types_mpir.h"
