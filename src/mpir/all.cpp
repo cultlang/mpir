@@ -12,11 +12,9 @@ using namespace cultlang::mpir;
 #define lMM sem->builtin_implementMultiMethod
 #define MoD "mpir"
 
-instance<Module> cultlang::mpir::make_bindings(instance<lisp::Namespace> ns, instance<> loader)
+void cultlang::mpir::make_bindings(instance<lisp::Module> ret)
 {
-  auto ret = instance<Module>::make(ns, loader);
-  auto semantics = instance<CultSemantics>::make(ret);
-  ret->builtin_setSemantics(semantics);
+  auto semantics = ret->require<lisp::CultSemantics>();
 
   semantics->builtin_implementMultiMethod("<", [](instance<mpz_class> a, instance<mpz_class> b) -> instance<bool> { return instance<bool>::make(*a < *b); });
   semantics->builtin_implementMultiMethod("<", [](instance<mpq_class> a, instance<mpq_class> b) -> instance<bool> { return instance<bool>::make(*a < *b); });
@@ -211,9 +209,6 @@ instance<Module> cultlang::mpir::make_bindings(instance<lisp::Namespace> ns, ins
   semantics->builtin_implementMultiMethod("*", [](instance<mpz_class> a, instance<mpz_class> b) -> instance<mpz_class> { return instance<mpz_class>::make(*a * *b); });
   semantics->builtin_implementMultiMethod("*", [](instance<mpq_class> a, instance<mpq_class> b) -> instance<mpq_class> { return instance<mpq_class>::make(*a * *b); });
   semantics->builtin_implementMultiMethod("*", [](instance<mpf_class> a, instance<mpf_class> b) -> instance<mpf_class> { return instance<mpf_class>::make(*a * *b); });
-
-
-  return ret;
 }
 
 BuiltinModuleDescription cultlang::mpir::BuiltinMpir("cultlang/mpir", cultlang::mpir::make_bindings);
