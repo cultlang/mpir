@@ -197,6 +197,10 @@ void cultlang::mpir::make_bindings(instance<lisp::Module> ret)
   semantics->builtin_implementMultiMethod("float", [](instance<mpz_class> a) -> instance<mpf_class> { return instance<mpf_class>::make(mpf_class(*a)); });
   semantics->builtin_implementMultiMethod("uint64", [](instance<mpz_class> a) -> instance<uint64_t> { return instance<uint64_t>::make(uint64_t(a->get_d())); });
 
+  semantics->builtin_implementMultiMethod("decimal", [](instance<std::string> a) -> instance<mpq_class> { return instance<mpq_class>::make(mpq_class(*a)); });
+  semantics->builtin_implementMultiMethod("float", [](instance<std::string> a) -> instance<mpf_class> { return instance<mpf_class>::make(mpf_class(*a)); });
+  semantics->builtin_implementMultiMethod("int", [](instance<std::string> a) -> instance<mpz_class> { return instance<mpz_class>::make(mpz_class(*a)); });
+
   semantics->builtin_implementMultiMethod("+", [](instance<mpz_class> a, instance<mpz_class> b) -> instance<mpz_class> { return instance<mpz_class>::make(*a + *b); });
   semantics->builtin_implementMultiMethod("+", [](instance<mpq_class> a, instance<mpq_class> b) -> instance<mpq_class> { return instance<mpq_class>::make(*a + *b); });
   semantics->builtin_implementMultiMethod("+", [](instance<mpf_class> a, instance<mpf_class> b) -> instance<mpf_class> { return instance<mpf_class>::make(*a + *b); });
